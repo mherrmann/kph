@@ -1,5 +1,5 @@
 # kph
-Python 2/3 ready implementation of the [Kölner Phonetik](http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik) phonetic algorithm. Based on the original work of Robert Schindler.
+Python 2/3 ready implementation of the [Kölner Phonetik](http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik) algorithm. Based on the original work of Robert Schindler.
 
 # Usage
     >>> import kph
@@ -14,4 +14,4 @@ Python 2/3 ready implementation of the [Kölner Phonetik](http://de.wikipedia.or
     True
 
 # Copyright
-Original copyright (C) 2011 by Robert Schindler <robert-sch@gmx.net>. Python 3 port copyright 2015 Michael Herrmann ([first name] at [last name].io).
+Original copyright 2011 by Robert Schindler <robert-sch@gmx.net>. Python 3 port copyright 2015 Michael Herrmann ([first name] at [last name].io).
