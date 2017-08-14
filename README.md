@@ -1,7 +1,12 @@
-# kph
-Python 2/3 ready implementation of the [Kölner Phonetik](http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik) algorithm.
+kph
+===
 
-# Usage
+Python 2/3 ready implementation of the Kölner Phonetik
+(http://de.wikipedia.org/wiki/K%C3%B6lner\_Phonetik) algorithm.
+
+Usage
+-----
+
     >>> import kph
     >>> kph.encode("Horst Meier")
     '078267'
@@ -13,7 +18,9 @@ Python 2/3 ready implementation of the [Kölner Phonetik](http://de.wikipedia.or
     ... kph.encode("Detlef Krunn") == kph.encode("Detlef Krun")
     True
 
-# License
+License
+-------
+
     kph - Python module implementing the 'Koelner Phonetik' algorithm.
     Copyright (C) 2011  Robert Schindler
 
@@ -30,6 +37,9 @@ Python 2/3 ready implementation of the [Kölner Phonetik](http://de.wikipedia.or
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Copyright
-Copyright 2011 by Robert Schindler <robert-sch@gmx.net>.
-Python 3 compatibility added by Michael Herrmann ([first name] at [last name].io).
+Copyright
+---------
+
+Copyright 2011 by Robert Schindler <robert-sch@gmx.net>. Python 3
+compatibility added by Michael Herrmann &lt;\[first name\] at \[last
+name\].io&gt;.
