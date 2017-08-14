@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-
+# -*- coding: utf-8
 
 # kph - Python module implementing the 'Koelner Phonetik' algorithm.
 # Copyright (C) 2011  Robert Schindler
@@ -33,33 +32,34 @@ Examples of usage:
 """
 
 
-__version__ = "0.3"
+__version__ = "0.4"
 __all__     = ["encode"]
 
 
+import collections
 import re
 
 
-RULETABLE = {re.compile(r".[A|E|I|J|O|U|Y|Ä|Ö|Ü].", re.I):     "0",
-             re.compile(r".[B].", re.I):                       "1",
-             re.compile(r".[P][^H]", re.I):                    "1",
-             re.compile(r".[D|T][^C|S|Z]", re.I):              "2",
-             re.compile(r".[F|V|W].", re.I):                   "3",
-             re.compile(r"[P][H].", re.I):                     "3",
-             re.compile(r".[G|K|Q].", re.I):                   "4",
-             re.compile(r"[\b][C][A|H|K|L|O|Q]", re.I):        "4",
-             re.compile(r"[^S|Z][C][A|H|K|O|Q|U|X]", re.I):    "4",
-             re.compile(r"[^C|K|Q][X].", re.I):                "48",
-             re.compile(r".[L].", re.I):                       "5",
-             re.compile(r".[M|N].", re.I):                     "6",
-             re.compile(r".[R].", re.I):                       "7",
-             re.compile(r".[S|Z|ß].", re.I):                   "8",
-             re.compile(r"[S|Z][C].", re.I):                   "8",
-             re.compile(r"\b[C][^A|H|K|L|O|Q|R|U|X]", re.I):   "8",
-             re.compile(r".[C][^A|H|K|O|Q|U|X]", re.I):        "8",
-             re.compile(r".[D|T][C|S|Z]", re.I):               "8",
-             re.compile(r"[C|K|Q][X].", re.I):                 "8",
-            }
+RULES = collections.OrderedDict()
+RULES[re.compile(r".[AEIJOUYÄÖÜ].", re.I)]    = "0"
+RULES[re.compile(r".[B].", re.I)]             = "1"
+RULES[re.compile(r".[P][^H]", re.I)]          = "1"
+RULES[re.compile(r".[DT][^CSZ]", re.I)]       = "2"
+RULES[re.compile(r".[FVW].", re.I)]           = "3"
+RULES[re.compile(r".[P][H]", re.I)]           = "3"
+RULES[re.compile(r".[GKQ].", re.I)]           = "4"
+RULES[re.compile(r"\s[C][AHKLOQRUX]", re.I)]  = "4"
+RULES[re.compile(r"[^SZ][C][AHKOQUX]", re.I)] = "4"
+RULES[re.compile(r"[^CKQ][X].", re.I)]        = "48"
+RULES[re.compile(r".[L].", re.I)]             = "5"
+RULES[re.compile(r".[MN].", re.I)]            = "6"
+RULES[re.compile(r".[R].", re.I)]             = "7"
+RULES[re.compile(r".[SZß].", re.I)]           = "8"
+RULES[re.compile(r"[SZ][C].", re.I)]          = "8"
+RULES[re.compile(r"\s[C][^AHKLOQRUX]", re.I)] = "8"
+RULES[re.compile(r"[C][^AHKOQUX]", re.I)]     = "8"
+RULES[re.compile(r".[DT][CSZ]", re.I)]        = "8"
+RULES[re.compile(r"[CKQ][X].", re.I)]         = "8"
 
 
 def encode(inputstring):
@@ -77,13 +77,14 @@ def encode(inputstring):
       part = " %s" % inputstring[:2]
     elif i == len(inputstring) - 1:
       part = "%s " % inputstring[i - 1:]
-    for rule, code in RULETABLE.items():
+
+    for rule, code in RULES.items():
       if rule.match(part):
         encoded += code
         break
 
-  while [v for v in RULETABLE.values() if encoded.find(v * 2) != -1]:
-    for v in RULETABLE.values():
+  while [v for v in RULES.values() if encoded.find(v * 2) != -1]:
+    for v in RULES.values():
       encoded = encoded.replace(v * 2, v)
 
   if encoded:

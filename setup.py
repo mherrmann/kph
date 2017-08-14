@@ -1,9 +1,10 @@
-#!/usr/bin/env python
-
+#!/usr/bin/env python3
 
 import os
 
-from setuptools import setup, find_packages
+from setuptools import setup
+
+from kph import __version__
 
 
 def read(fname):
@@ -12,16 +13,14 @@ def read(fname):
 
 setup(
   name = "kph",
-  version = "0.3",
+  version = __version__,
   url = "https://github.com/mherrmann/kph",
   license = "GPL-3",
-  description = "An easy implementation of the Koelner Phonetic.",
+  description = "Python 2/3 ready implementation of the Koelner Phonetic.",
   long_description = read("README"),
   author = "Robert Schindler",
-  author_email = "robert-sch@gmx.net",
-  packages = find_packages("src"),
-  package_dir = {"": "src"},
-  install_requires= ["setuptools"],
+  author_email = "r.schindler@efficiosoft.com",
+  packages = ["kph"],
   classifiers = [
       'Development Status :: 5 - Production/Stable',
       'Intended Audience :: Developers',
