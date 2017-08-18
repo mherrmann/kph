@@ -1,7 +1,7 @@
 # -*- coding: utf-8
 
 # kph - Python module implementing the 'Koelner Phonetik' algorithm.
-# Copyright (C) 2011  Robert Schindler
+# Copyright (C) 2008-2017 Robert Schindler
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ Examples of usage:
 """
 
 
-__version__ = "0.4"
+__version__ = "0.4.1"
 __all__     = ["encode"]
 
 
@@ -61,12 +61,17 @@ RULES[re.compile(r"[C][^AHKOQUX]", re.I)]     = "8"
 RULES[re.compile(r".[DT][CSZ]", re.I)]        = "8"
 RULES[re.compile(r"[CKQ][X].", re.I)]         = "8"
 
+INVALID_CHAR_PATTERN = re.compile(r"[^a-zäöüß\s]", re.I)
+
 
 def encode(inputstring):
   """
   encode(string inputstring) -> string
-    Returns the phonetic code of inputstring
+    Returns the phonetic code of given inputstring.
   """
+
+  # remove anything except characters and whitespace
+  inputstring = INVALID_CHAR_PATTERN.sub("", inputstring)
 
   encoded = ""
   for i in range(len(inputstring)):
