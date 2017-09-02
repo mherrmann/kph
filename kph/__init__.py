@@ -36,11 +36,19 @@ __version__ = "0.4.1"
 __all__     = ["encode"]
 
 
+try:
+    # for static type checking
+    import typing
+except ImportError:
+    pass
+
+
 import collections
 import re
 
 
-RULES = collections.OrderedDict()
+RULES = collections.OrderedDict() \
+        # type: typing.collections.OrderedDict[typing.Pattern[str], str]
 RULES[re.compile(r".[AEIJOUYÄÖÜ].", re.I)]    = "0"
 RULES[re.compile(r".[B].", re.I)]             = "1"
 RULES[re.compile(r".[P][^H]", re.I)]          = "1"
@@ -64,35 +72,36 @@ RULES[re.compile(r"[CKQ][X].", re.I)]         = "8"
 INVALID_CHAR_PATTERN = re.compile(r"[^a-zäöüß\s]", re.I)
 
 
-def encode(inputstring):
-  """
-  encode(string inputstring) -> string
-    Returns the phonetic code of given inputstring.
-  """
+def encode(inputstring):  # type: (str) -> str
+    """
+    encode(string inputstring) -> string
+      Returns the phonetic code of given inputstring.
+    """
 
-  # remove anything except characters and whitespace
-  inputstring = INVALID_CHAR_PATTERN.sub("", inputstring)
+    # remove anything except characters and whitespace
+    inputstring = INVALID_CHAR_PATTERN.sub("", inputstring)
 
-  encoded = ""
-  for i in range(len(inputstring)):
-    part = inputstring[i - 1:i + 2]
-    if len(inputstring) == 1:
-      part = " %s " % inputstring[0]
-    elif i == 0:
-      part = " %s" % inputstring[:2]
-    elif i == len(inputstring) - 1:
-      part = "%s " % inputstring[i - 1:]
+    encoded = ""
+    for i in range(len(inputstring)):
+        part = inputstring[i-1 : i+2]
+        if len(inputstring) == 1:
+            part = " %s " % inputstring[0]
+        elif i == 0:
+            part = " %s" % inputstring[:2]
+        elif i == len(inputstring) - 1:
+            part = "%s " % inputstring[i - 1:]
 
-    for rule, code in RULES.items():
-      if rule.match(part):
-        encoded += code
-        break
+        for rule, code in RULES.items():
+            if rule.match(part):
+                encoded += code
+                break
 
-  while [v for v in RULES.values() if encoded.find(v * 2) != -1]:
-    for v in RULES.values():
-      encoded = encoded.replace(v * 2, v)
+    # remove immediately repeated occurrences of phonetic codes
+    while [v for v in RULES.values() if encoded.find(v*2) != -1]:
+        for v in RULES.values():
+            encoded = encoded.replace(v*2, v)
 
-  if encoded:
-    encoded = encoded[0] + encoded[1:].replace("0", "")
+    if encoded:
+        encoded = encoded[0] + encoded[1:].replace("0", "")
 
-  return encoded
+    return encoded
