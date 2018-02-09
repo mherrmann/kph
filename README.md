@@ -2,7 +2,7 @@ kph
 ===
 
 Python 2/3 ready implementation of the Kölner Phonetik
-(http://de.wikipedia.org/wiki/K%C3%B6lner\_Phonetik) algorithm.
+(http://de.wikipedia.org/wiki/K%C3%B6lner_Phonetik) algorithm.
 
 Usage
 -----
