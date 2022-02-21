@@ -65,7 +65,7 @@ RULES[re.compile(r".[R].", re.I)]             = "7"
 RULES[re.compile(r".[SZß].", re.I)]           = "8"
 RULES[re.compile(r"[SZ][C].", re.I)]          = "8"
 RULES[re.compile(r"\s[C][^AHKLOQRUX]", re.I)] = "8"
-RULES[re.compile(r"[C][^AHKOQUX]", re.I)]     = "8"
+RULES[re.compile(r".[C][^AHKOQUX]", re.I)]    = "8"
 RULES[re.compile(r".[DT][CSZ]", re.I)]        = "8"
 RULES[re.compile(r"[CKQ][X].", re.I)]         = "8"
 
